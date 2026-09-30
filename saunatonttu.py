@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Saunatonttu: ilmoittaa kun poerssisaehkoe on tarpeeksi halpaa saunan lammitykseen."""
+"""Saunatonttu: ilmoittaa kun pörssisähkö on tarpeeksi halpaa saunan lämmitykseen."""
 
 import os
 import sys
@@ -11,7 +11,7 @@ import requests
 HELSINKI = ZoneInfo("Europe/Helsinki")
 
 PRICE_API_URL = "https://api.porssisahko.net/v2/latest-prices.json"
-PRICE_THRESHOLD_SNT = float(os.environ.get("PRICE_THRESHOLD_SNT", "10.0"))
+PRICE_THRESHOLD_SNT = float(os.environ.get("PRICE_THRESHOLD_SNT", "50.0"))
 WINDOW_START_HOUR = int(os.environ.get("WINDOW_START_HOUR", "18"))
 WINDOW_END_HOUR = int(os.environ.get("WINDOW_END_HOUR", "21"))  # exclusive
 RUN_HOUR_HELSINKI = int(os.environ.get("RUN_HOUR_HELSINKI", "12"))
