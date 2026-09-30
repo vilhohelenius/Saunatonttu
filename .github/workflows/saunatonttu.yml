@@ -1,0 +1,33 @@
+name: Saunatonttu
+
+on:
+  schedule:
+    # Klo 12:00 Suomen ajan mukaan ymparivuotisesti (kesa- ja talviaika).
+    # Skripti itse tarkistaa ettei aja vaarasta ajosta, joten molemmat
+    # ajastukset voivat laueta turvallisesti.
+    - cron: "0 9 * * *"  # 12:00 EEST (kesaaika, maalis-lokakuu)
+    - cron: "0 10 * * *" # 12:00 EET (talviaika, lokakuu-maalis)
+  workflow_dispatch:
+    inputs:
+      force_run:
+        description: "Ohita kellonaikatarkistus ja aja heti"
+        required: false
+        default: "false"
+
+jobs:
+  check-price:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      - name: Tarkista sahkon hinta ja ilmoita tarvittaessa
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          FORCE_RUN: ${{ github.event.inputs.force_run == 'true' && '1' || '0' }}
+        run: python saunatonttu.py
