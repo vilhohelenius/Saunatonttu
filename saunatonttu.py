@@ -11,7 +11,7 @@ import requests
 HELSINKI = ZoneInfo("Europe/Helsinki")
 
 PRICE_API_URL = "https://api.porssisahko.net/v2/latest-prices.json"
-PRICE_THRESHOLD_SNT = float(os.environ.get("PRICE_THRESHOLD_SNT", "50.0"))
+PRICE_THRESHOLD_SNT = float(os.environ.get("PRICE_THRESHOLD_SNT", "10.0"))
 WINDOW_START_HOUR = int(os.environ.get("WINDOW_START_HOUR", "18"))
 WINDOW_END_HOUR = int(os.environ.get("WINDOW_END_HOUR", "21"))  # exclusive
 RUN_HOUR_HELSINKI = int(os.environ.get("RUN_HOUR_HELSINKI", "12"))
@@ -50,7 +50,7 @@ def send_notification(message):
         NTFY_URL,
         data=message.encode("utf-8"),
         headers={
-            "Title": "Saunatonttu",
+            "Title": "Saunatonttu🧝🏼",
             "Tags": "fire",
         },
         timeout=15,
@@ -80,7 +80,7 @@ def main():
 
     lines = [f"klo {start:%H:%M}-{end:%H:%M}: {price:.2f} snt/kWh" for start, end, price in cheap_slots]
     message = (
-        f"Sahko alle {PRICE_THRESHOLD_SNT:.0f} snt/kWh tanaan!\n" + "\n".join(lines) + "\nSauna lammitykseen sopiva ilta."
+        f"Sähkö alle {PRICE_THRESHOLD_SNT:.0f} snt/kWh tänään!\n" + "\n".join(lines) + "\nSaunan lämmitykseen sopiva ilta!"
     )
     send_notification(message)
     print("Ilmoitus lahetetty.")
