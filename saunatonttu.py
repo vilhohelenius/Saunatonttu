@@ -50,7 +50,7 @@ def send_notification(message):
         NTFY_URL,
         data=message.encode("utf-8"),
         headers={
-            "Title": "Saunatonttu🧝🏼",
+            "Title": "Saunatonttu",
             "Tags": "fire",
         },
         timeout=15,
